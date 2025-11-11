@@ -1,0 +1,7 @@
+file:///etc/nixos nixos
+file:///home/bostan/.config .config
+file:///home/bostan/Documents
+file:///home/bostan/Music
+file:///home/bostan/Pictures
+file:///home/bostan/Videos
+file:///home/bostan/Downloads

@@ -1,0 +1,23 @@
+{ config, pkgs, lib, ... }:
+{
+ services.xserver.videoDrivers = [ "nvidia" ];
+ 
+    hardware.graphics.enable = true;
+  
+    hardware.nvidia = {
+
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    powerManagement.finegrained = true;
+    open = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
+    
+  };
+    hardware.nvidia.prime = {
+    offload.enable = true;
+    
+    nvidiaBusId = "PCI:1:0:0";
+    amdgpuBusId = "PCI:54:0:0"; # If you have an AMD iGPU
+  };
+ }
