@@ -1,0 +1,49 @@
+{
+    "bean": {
+        "_v": 0,
+        "addr": "freeadem.space",
+        "brutal_speed": 0,
+        "c_cfg": "",
+        "c_out": "",
+        "enable_brutal": false,
+        "flow": "xtls-rprx-vision",
+        "mux": 0,
+        "name": "freeadem-Andrei-bostan",
+        "pass": "01dc2be5-83ce-4a52-b53d-740de2ccdbef",
+        "port": 443,
+        "stream": {
+            "alpn": "",
+            "cert": "",
+            "ed_len": 0,
+            "ed_name": "",
+            "h_type": "",
+            "headers": "",
+            "host": "",
+            "insecure": false,
+            "method": "",
+            "net": "tcp",
+            "pac_enc": "xudp",
+            "path": "",
+            "pbk": "CuPUN0RADoBxi_ftYnzEirvPKOxAPyxLIX78vqyqAl8",
+            "sec": "tls",
+            "sid": "33",
+            "sni": "www.google.com",
+            "tls_frag": false,
+            "tls_frag_fall_delay": "",
+            "tls_record_frag": false,
+            "utls": "chrome"
+        }
+    },
+    "country": "",
+    "dl": "",
+    "gid": 0,
+    "id": 0,
+    "report": "",
+    "traffic": {
+        "dl": 37549007185,
+        "ul": 1240157718
+    },
+    "type": "vless",
+    "ul": "",
+    "yc": 0
+}

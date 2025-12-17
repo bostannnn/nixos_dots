@@ -1,13 +1,13 @@
-@define-color surface #10150a;
-@define-color surfaceVariant #404a33;
+@define-color surface #171213;
+@define-color surfaceVariant #514345;
 
-@define-color onSurface #dfe5d2;
-@define-color onSurfaceVariant #bfcbad;
+@define-color onSurface #ebe0e0;
+@define-color onSurfaceVariant #d5c2c4;
 
-@define-color primary #f7bd48;
-@define-color secondary #edc06c;
+@define-color primary #f5b6c0;
+@define-color secondary #dfbfc3;
 @define-color error #ffb4ab;
-@define-color outline #8a9579;
+@define-color outline #9d8d8f;
 
 * {
   all: unset;
@@ -186,4 +186,6 @@ child:selected .item-box {
 :not(.calc).current {
   font-style: italic;
 }
+
+
 

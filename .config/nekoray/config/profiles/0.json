@@ -1,0 +1,45 @@
+{
+    "bean": {
+        "_v": 0,
+        "addr": "205.172.57.87",
+        "brutal_speed": 0,
+        "c_cfg": "",
+        "c_out": "",
+        "enable_brutal": false,
+        "flow": "xtls-rprx-vision",
+        "mux": 0,
+        "name": "bostan",
+        "pass": "a54e7eba-cd92-4a0f-bfb7-628b0721bd08",
+        "port": 8443,
+        "stream": {
+            "alpn": "h2,http/1.1",
+            "cert": "",
+            "ed_len": 0,
+            "ed_name": "",
+            "h_type": "",
+            "headers": "",
+            "host": "",
+            "insecure": false,
+            "method": "",
+            "net": "tcp",
+            "pac_enc": "xudp",
+            "path": "",
+            "pbk": "Ac0n_vb50YVzsK8FJAS2njbMSFoPOVcVaJeANpHyaFI",
+            "sec": "reality",
+            "sid": "f1b31274b17d9784",
+            "sni": "www.google.com",
+            "utls": "chrome"
+        }
+    },
+    "dl": "",
+    "gid": 0,
+    "id": 0,
+    "report": "",
+    "traffic": {
+        "dl": 4182181258,
+        "ul": 322872439
+    },
+    "type": "vless",
+    "ul": "",
+    "yc": 0
+}

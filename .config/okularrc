@@ -1,0 +1,14 @@
+[Desktop Entry]
+FullScreen=false
+
+[General]
+LockSidebar=true
+ShowSidebar=true
+
+[Recent Files]
+File1[$e]=/etc/nixos/configuration.nix
+File2[$e]=/etc/nixos/home/hyprland.nix
+File3[$e]=$HOME/Pictures/gscreenshot_2025-11-11-125645.png
+Name1[$e]=configuration.nix
+Name2[$e]=hyprland.nix
+Name3[$e]=gscreenshot_2025-11-11-125645.png

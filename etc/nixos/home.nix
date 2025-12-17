@@ -16,10 +16,15 @@
     name = "Bibata-Modern-Classic";
     size = 16;
   };
+  
+  home.packages = with pkgs; [
+  python3
+];
 
   # User configuration
   home.username = "bostan";
   home.homeDirectory = "/home/bostan";
+ services.polkit-gnome.enable = true;
 
   # Starship prompt
   programs.starship = {
@@ -31,6 +36,28 @@
       line_break.disabled = true;
     };
   };
+  
+  programs.ssh = {
+  enable = true;
+  matchBlocks = {
+    "github.com" = {
+      identityFile = "~/.ssh/id_ed25519";
+    };
+  };
+};
+
+  programs.firefox = {
+  enable = true;
+  profiles.default = {
+    settings = {
+      "browser.newtabpage.activity-stream.showSponsored" = false;
+      "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+      "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+      "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+      "browser.newtabpage.activity-stream.topSitesRows" = 2;
+    };
+  };
+};
   
 
   # Home Manager state version
