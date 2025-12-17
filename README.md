@@ -5,6 +5,10 @@
 
 My personal NixOS configuration files and dotfiles.
 
+What's used:
+Patch for Nautilus, so color-schemes are applie dynamically - https://github.com/bostannnn/nautilus-css-hot-reload
+Fork of noctalia-shell - https://github.com/bostannnn/noctalia-shell
+
 ## Contents
 
 - `/etc/nixos` - NixOS system configuration (flakes, home-manager, etc.)
