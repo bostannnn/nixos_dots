@@ -3,9 +3,16 @@ x-scheme-handler/tg=org.telegram.desktop.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
 text/plain=org.gnome.TextEditor.desktop
 application/x-7z-compressed=org.kde.ark.desktop
+x-scheme-handler/discord-1345366770436800533=discord-1345366770436800533.desktop
+text/markdown=obsidian.desktop
+image/jpeg=org.gnome.Loupe.desktop
+image/png=org.gnome.Loupe.desktop
 
 [Added Associations]
 x-scheme-handler/tg=org.telegram.desktop.desktop;
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;
 text/plain=org.gnome.TextEditor.desktop;
 application/x-7z-compressed=org.kde.ark.desktop;
+text/markdown=obsidian.desktop;
+image/jpeg=org.gnome.Loupe.desktop;
+image/png=org.gnome.Loupe.desktop;

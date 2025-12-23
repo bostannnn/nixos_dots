@@ -23,16 +23,16 @@ systemd.services.nvidia-hibernate.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
-    powerManagement.finegrained = true;
-    forceFullCompositionPipeline = true;
+    powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = true;
+    forceFullCompositionPipeline = false;  # Better for Wayland
     package = config.boot.kernelPackages.nvidiaPackages.beta;
 
-    prime = {
-      offload.enable = true;
-      nvidiaBusId = "PCI:1:0:0";
-      amdgpuBusId = "PCI:54:0:0";
-    };
+    #prime = {
+     # offload.enable = true;
+      #nvidiaBusId = "PCI:1:0:0";
+      #amdgpuBusId = "PCI:54:0:0";
+    #};
   };
 }

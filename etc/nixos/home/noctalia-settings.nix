@@ -52,7 +52,7 @@
         bar = {
           position = "left";           # "top", "bottom", "left", "right"
           mode = "framed";             # "classic", "floating", "framed"
-          transparent = false;
+          transparent = true;
           showOutline = false;
           monitors = [ ];              # Empty = all monitors
           density = "massive";     # "compact", "default", "comfortable"
@@ -118,8 +118,8 @@
                 # hideUnoccupied = false;
                 # characterCount = 2;
                 # showApplications = false;
-                # showLabelsOnlyWhenOccupied = true;
-                # colorizeIcons = false;
+                showLabelsOnlyWhenOccupied = false;
+                colorizeIcons = false;
                 # enableScrollWheel = true;
               }
               {
@@ -382,7 +382,7 @@
           cpuPollingInterval = 3000;
           tempPollingInterval = 3000;
           gpuPollingInterval = 3000;
-          enableNvidiaGpu = false;             # Warning: wakes dGPU on laptops
+          enableNvidiaGpu = true;              # Enabled for RTX 5080 desktop
           memPollingInterval = 3000;
           diskPollingInterval = 3000;
           networkPollingInterval = 3000;
@@ -430,6 +430,7 @@
             { action = "suspend"; enabled = true; }
             { action = "hibernate"; enabled = true; }
             { action = "reboot"; enabled = true; }
+            { action = "reboot-windows"; enabled = true; }
             { action = "logout"; enabled = true; }
             { action = "shutdown"; enabled = true; }
           ];

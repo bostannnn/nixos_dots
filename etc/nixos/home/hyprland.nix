@@ -1,9 +1,5 @@
 { config, inputs, pkgs, lib, ... }:
 {
-  home.username = "bostan";
-  home.homeDirectory = "/home/bostan";
-  home.stateVersion = "25.05";
-  
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
@@ -13,19 +9,25 @@
     settings = {
       "$mod" = "SUPER";
       monitor = [
-        "DP-1, 3440x1440@179, 0x0, 1"
+        ", 3440x1440@179, 0x0, 1"
       ];
       env = [
         "NIXOS_OZONE_WL,1"
-        "WLR_NO_HARDWARE_CURSORS,1"
         "QT_QPA_PLATFORMTHEME,qt6ct"
+        "GBM_BACKEND,nvidia-drm"
+        "LIBVA_DRIVER_NAME,nvidia"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "NVD_BACKEND,direct"
+        "ELECTRON_OZONE_PLATFORM_HINT,auto"
+        "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
       ];
       exec-once = [
+        "gnome-keyring-daemon --start --components=secrets,ssh,pkcs11"
         "swww-daemon"
         "noctalia-shell"
         "elephant"
         "steam"
-        "throne"
+        "Throne"
       ];
       input = {
         kb_layout = "us,ru";
@@ -87,9 +89,13 @@
           "borderangle,1,100,default,loop"
         ];
       };
+      experimental = {
+        xx_color_management_v4 = true;
+      };
       misc = {
         force_default_wallpaper = 1;
         disable_hyprland_logo = false;
+        vrr = 1;
       };
       workspace = [
         "1, monitor:DP-1, persistent:true"
@@ -133,6 +139,10 @@
         "$mod SHIFT, 3, movetoworkspace, 3"
         "$mod SHIFT, 4, movetoworkspace, 4"
         "$mod SHIFT, 5, movetoworkspace, 5"
+            ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ''$mod, S, exec, sh -lc 'mkdir -p "$HOME/Pictures/Screenshots"; f="$HOME/Pictures/Screenshots/screenshot-$(date +%F-%H%M%S).png"; if grim "$f"; then (wl-copy < "$f" >/dev/null 2>&1 || true); notify-send --app-name=Screenshot --category=screenshot "Screenshot Saved" "$f" --icon="$f" --hint=string:image-path:"$f" -t 5000; fi' ''
+        ''$mod SHIFT, S, exec, sh -lc 'mkdir -p "$HOME/Pictures/Screenshots"; f="$HOME/Pictures/Screenshots/screenshot-$(date +%F-%H%M%S).png"; if grim -g "$(slurp -d)" "$f"; then (wl-copy < "$f" >/dev/null 2>&1 || true); notify-send --app-name=Screenshot --category=screenshot "Screenshot Saved" "$f" --icon="$f" --hint=string:image-path:"$f" -t 5000; fi' ''
+        ''$mod CTRL, S, exec, sh -lc 'mkdir -p "$HOME/Pictures/Screenshots"; f="$HOME/Pictures/Screenshots/screenshot-$(date +%F-%H%M%S).png"; geom="$(hyprctl activewindow -j | jq -r '[.at[0],.at[1],.size[0],.size[1]]|@tsv' | awk '{printf "%s,%s %sx%s",$1,$2,$3,$4}')"; if grim -g "$geom" "$f"; then (wl-copy < "$f" >/dev/null 2>&1 || true); notify-send --app-name=Screenshot --category=screenshot "Screenshot Saved" "$f" --icon="$f" --hint=string:image-path:"$f" -t 5000; fi' ''
       ];
       bindm = [
         "$mod, mouse:272, movewindow"
@@ -141,6 +151,10 @@
       bindr = [
         "SUPER, SUPER_L, exec, noctalia-shell ipc call launcher toggle"
       ];
+        bindel = [
+    ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+    ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+  ];
     };
   };
 }

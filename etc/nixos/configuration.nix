@@ -1,142 +1,202 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running 'nixos-help').
-# https://taproom.cider.sh/taps
-# https://github.com/SteamAchievementNotifier/SteamAchievementNotifier
-# https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Linux-x64.AppImage
+# NixOS Configuration
+# https://nixos.org/nixos/options.html
 { config, pkgs, stable, noctalia, lib, inputs, ... }:
+
 {
   imports = [
     ./hardware-configuration.nix
     ./nvidia.nix
+    ./storage.nix
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.nix-path = [ "nixos-config=/etc/nixos" ];
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Nix Settings
+  # ═══════════════════════════════════════════════════════════════════════════
 
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
-  boot.kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      nix-path = [ "nixos-config=/etc/nixos" ];
+      auto-optimise-store = true;
+    };
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
+    };
+    optimise.automatic = true;
+  };
 
+  nixpkgs.config.allowUnfree = true;
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Boot & Kernel
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelPackages = pkgs.linuxPackages_cachyos;
+    kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
+    supportedFilesystems = [ "ntfs" ];
+  };
+
+  # ═══════════════════════════════════════════════════════════════════════════
   # Networking
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
+  # ═══════════════════════════════════════════════════════════════════════════
 
-  # Enable the X11 windowing system
-  services.xserver.enable = true;
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
+  };
 
-  # Display Manager
-  services.displayManager.gdm.enable = true;
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Localization
+  # ═══════════════════════════════════════════════════════════════════════════
 
-  # Desktop Environments
-  services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.wayland = true;
-  services.gnome.core-apps.enable = false;
-
-  # Gamepad support
-  hardware.steam-hardware.enable = true;
-  hardware.uinput.enable = true;
-
-  # Exclude packages
-  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
-  services.xserver.excludePackages = [ pkgs.xterm ];
-
-  # Time zone
   time.timeZone = "Europe/Moscow";
 
-  # Internationalisation
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "ru_RU.UTF-8";
-    LC_IDENTIFICATION = "ru_RU.UTF-8";
-    LC_MEASUREMENT = "ru_RU.UTF-8";
-    LC_MONETARY = "ru_RU.UTF-8";
-    LC_NAME = "ru_RU.UTF-8";
-    LC_NUMERIC = "ru_RU.UTF-8";
-    LC_PAPER = "ru_RU.UTF-8";
-    LC_TELEPHONE = "ru_RU.UTF-8";
-    LC_TIME = "ru_RU.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "ru_RU.UTF-8";
+      LC_IDENTIFICATION = "ru_RU.UTF-8";
+      LC_MEASUREMENT = "ru_RU.UTF-8";
+      LC_MONETARY = "ru_RU.UTF-8";
+      LC_NAME = "ru_RU.UTF-8";
+      LC_NUMERIC = "ru_RU.UTF-8";
+      LC_PAPER = "ru_RU.UTF-8";
+      LC_TELEPHONE = "ru_RU.UTF-8";
+      LC_TIME = "ru_RU.UTF-8";
+    };
   };
 
-  # Keyboard layout
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Desktop Environment & Display
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  services.xserver = {
+    enable = true;
+    xkb.layout = "us";
+    excludePackages = [ pkgs.xterm ];
   };
-  
 
-  # Services
-  services.printing.enable = false;
-  services.geoclue2.enable = true;
+  services.displayManager.gdm = {
+    enable = true;
+    wayland = true;
+  };
 
-  # Sound with PipeWire
-  security.rtkit.enable = true;
+  services.desktopManager.gnome.enable = true;
+
+  services.gnome = {
+    gnome-keyring.enable = true;
+    core-apps.enable = false;
+  };
+
+  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Audio
+  # ═══════════════════════════════════════════════════════════════════════════
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;
   };
-  
-  # User account
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Hardware
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  hardware = {
+    steam-hardware.enable = true;
+    uinput.enable = true;
+  };
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Security
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  security = {
+    rtkit.enable = true;
+    polkit.enable = true;
+    pam.services.login.enableGnomeKeyring = true;
+    pam.services.gdm.enableGnomeKeyring = true;
+  };
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # User
+  # ═══════════════════════════════════════════════════════════════════════════
+
   users.users.bostan = {
     isNormalUser = true;
     description = "bostan";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
-      shell = pkgs.fish;
-    packages = with pkgs; [
-      # thunderbird
-    ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    shell = pkgs.fish;
   };
 
-  # Automatic login (disabled)
-  services.displayManager.autoLogin.enable = false;
-  # services.displayManager.autoLogin.user = "bostan";
-
-  # Workaround for GNOME autologin (only needed if autoLogin.enable = true)
-  # systemd.services."getty@tty1".enable = false;
-  # systemd.services."autovt@tty1".enable = false;
-
-  # System auto-upgrade
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
-
+  # ═══════════════════════════════════════════════════════════════════════════
   # Programs
-  programs.firefox.enable = true;
-  programs.appimage.enable = true;
-  programs.appimage.binfmt = true;
-  programs.walker.enable = true;
-  
-programs.gamescope = {
-  enable = true;
-  capSysNice = true;  # Better performance scheduling
-};
+  # ═══════════════════════════════════════════════════════════════════════════
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-      gamescopeSession.enable = true;  # Enables full gamescope session
+  programs = {
+    fish.enable = true;
+    starship.enable = true;
+
+    firefox.enable = true;
+
+    hyprland = {
+      enable = true;
+      xwayland.enable = true;
+    };
+
+    walker.enable = true;
+
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+      gamescopeSession.enable = true;
+    };
+
+    gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
+
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
+
+    throne = {
+      enable = true;
+      tunMode.enable = true;
+    };
   };
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-  
-  programs.throne = {
-  enable = true;
-  tunMode.enable = true;
-};
 
-  programs.fish.enable = true;
-  programs.starship.enable = true;
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Services
+  # ═══════════════════════════════════════════════════════════════════════════
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  services.geoclue2.enable = true;
+  services.printing.enable = false;
 
-  # System packages
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Virtualization
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  virtualisation.docker.enable = true;
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # Packages
+  # ═══════════════════════════════════════════════════════════════════════════
+
+# System packages
   environment.systemPackages = with pkgs; [
     # Core utilities
     wget
@@ -152,6 +212,7 @@ programs.gamescope = {
     imagemagick
     gpu-screen-recorder
     claude-code
+    codex
     grim
     slurp
     satty        # annotation tool
@@ -182,6 +243,7 @@ programs.gamescope = {
 
     # Apps
     telegram-desktop
+    gimp
     protonplus
     nautilus
     nautilus-python
@@ -195,6 +257,7 @@ programs.gamescope = {
     cava
     sushi
     godotPackages_4_4.godot
+    baobab
     gamescope
     gamescope-wsi
 
@@ -232,9 +295,12 @@ programs.gamescope = {
     inputs.quickshell.packages.${system}.default
     inputs.caelestia-shell.packages.${system}.default
   ];
-  
-  virtualisation.docker.enable = true;
 
-  # https://nixos.org/nixos/options.html
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # System
+  # ═══════════════════════════════════════════════════════════════════════════
+
   system.stateVersion = "25.05";
 }
+

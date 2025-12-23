@@ -4,4 +4,9 @@ file:///home/bostan/Documents
 file:///home/bostan/Downloads
 file:///home/bostan/Music
 file:///home/bostan/Pictures
+file:///home/bostan/Pictures/Screenshots Screenshots
+file:///home/bostan/noctalia-shell-fork/Assets/Scripts Scripts
 file:///home/bostan/Videos
+sftp://root@192.168.50.60/mnt/user Unraid
+sftp://root@192.168.50.60/mnt/user/media/anime Unraid Anime
+sftp://root@192.168.50.60/mnt/user/data/downloads Unraid Downloads
