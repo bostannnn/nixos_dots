@@ -8,6 +8,7 @@ set -e
 REPO_DIR="/home/bostan/nixos_dots"
 CONFIG_SOURCE="/home/bostan/.config"
 NIXOS_SOURCE="/etc/nixos"
+GITHUB_SSH="git@github.com:bostannnn/nixos_dots.git"
 
 # Color codes for output
 GREEN='\033[0;32m'
@@ -16,6 +17,9 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 cd "$REPO_DIR"
+
+echo -e "${BLUE}==> Ensuring SSH remote for GitHub...${NC}"
+git remote set-url origin "$GITHUB_SSH"
 
 echo -e "${BLUE}==> Syncing /etc/nixos...${NC}"
 rsync -av --delete "$NIXOS_SOURCE/" "$REPO_DIR/etc/nixos/"
