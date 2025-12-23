@@ -41,6 +41,7 @@ echo -e "${BLUE}==> Syncing ~/.config from repository...${NC}"
 rsync -av --delete \
   --exclude='*cache*' \
   --exclude='*.log' \
+  --exclude='AmneziaVPN.ORG' \
   --exclude='Electron' \
   --exclude='chromium' \
   --exclude='google-chrome' \
@@ -49,6 +50,8 @@ rsync -av --delete \
   --exclude='Slack' \
   --exclude='pulse' \
   --exclude='autostart' \
+  --exclude='mgba-forwarder-tools/config.json' \
+  --exclude='fragments/settings.json' \
   "$REPO_DIR/.config/" "$CONFIG_DEST/"
 
 echo -e "${BLUE}==> Syncing /etc/nixos from repository (requires sudo)...${NC}"

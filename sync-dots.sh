@@ -28,6 +28,7 @@ echo -e "${BLUE}==> Syncing ~/.config...${NC}"
 rsync -av --delete \
   --exclude='*cache*' \
   --exclude='*.log' \
+  --exclude='AmneziaVPN.ORG' \
   --exclude='Electron' \
   --exclude='chromium' \
   --exclude='google-chrome' \
@@ -36,6 +37,8 @@ rsync -av --delete \
   --exclude='Slack' \
   --exclude='pulse' \
   --exclude='autostart' \
+  --exclude='mgba-forwarder-tools/config.json' \
+  --exclude='fragments/settings.json' \
   "$CONFIG_SOURCE/" "$REPO_DIR/.config/"
 
 echo -e "${BLUE}==> Checking for changes...${NC}"
